@@ -2,49 +2,161 @@
 
 {% block content %}
 
-<h1>🚀 Dashboard Orbital</h1>
+<section class="dashboard-hero">
+
+    <div>
+        <span class="hero-badge">● Sistema Online</span>
+
+        <h1>OrbitalGuard Mission Control</h1>
+
+        <p>
+            Plataforma inteligente para monitoramento de lixo espacial,
+            análise orbital, simulações de colisão e otimização de missões.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/radar"><button>Abrir Radar Orbital</button></a>
+            <a href="/report"><button class="button-secondary">Gerar Relatório</button></a>
+        </div>
+    </div>
+
+    <div class="hero-radar">
+        <div class="hero-earth">🌎</div>
+        <div class="hero-orbit orbit-one">🛰</div>
+        <div class="hero-orbit orbit-two">☄</div>
+        <div class="hero-orbit orbit-three">🛰</div>
+    </div>
+
+</section>
 
 <div class="cards">
 
-    <div class="card">
+    <div class="card kpi-card">
+        <span>🛰</span>
         <h3>Satélites Monitorados</h3>
         <h1>{{ satellites }}</h1>
+        <p>Objetos operacionais rastreados</p>
     </div>
 
-    <div class="card">
+    <div class="card kpi-card">
+        <span>☄</span>
         <h3>Detritos Espaciais</h3>
         <h1>{{ debris }}</h1>
+        <p>Fragmentos em órbita terrestre</p>
     </div>
 
-    <div class="card">
+    <div class="card kpi-card alert-critical">
+        <span>🚨</span>
+        <h3>Alertas Críticos</h3>
+        <h1>{{ critical_alerts|length }}</h1>
+        <p>Risco orbital elevado</p>
+    </div>
+
+    <div class="card kpi-card">
+        <span>🧠</span>
         <h3>Algoritmos Ativos</h3>
         <h1>4</h1>
+        <p>Dijkstra, Guloso, Monte Carlo e DP</p>
+    </div>
+
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="card">
+        <h2>🚨 Situação Orbital</h2>
+
+        {% if critical_alerts %}
+
+            <p>
+                O sistema identificou objetos com risco elevado.
+                A recomendação é priorizar monitoramento e simulação.
+            </p>
+
+            <div class="danger-object">
+                <span>Objeto mais crítico</span>
+                <h2>{{ most_dangerous.name }}</h2>
+                <p>Risco {{ most_dangerous.risk }}</p>
+            </div>
+
+            <a href="/alerts">
+                <button>Ver Central de Alertas</button>
+            </a>
+
+        {% else %}
+
+            <p>
+                Nenhum alerta crítico detectado.
+                O cenário orbital está dentro de níveis aceitáveis.
+            </p>
+
+        {% endif %}
     </div>
 
     <div class="card">
-        <h3>Status</h3>
-        <h1>🟢 Online</h1>
+        <h2>🧩 Módulos Operacionais</h2>
+
+        <div class="module-list">
+
+            <a href="/route">
+                <strong>Dijkstra</strong>
+                <span>Caminho mínimo orbital</span>
+            </a>
+
+            <a href="/greedy">
+                <strong>Guloso</strong>
+                <span>Priorização de remoção</span>
+            </a>
+
+            <a href="/collision">
+                <strong>Monte Carlo</strong>
+                <span>Simulação probabilística</span>
+            </a>
+
+            <a href="/mission-planner">
+                <strong>Programação Dinâmica</strong>
+                <span>Otimização de combustível</span>
+            </a>
+
+        </div>
     </div>
 
 </div>
 
 <div class="card">
-    <h2>Centro de Monitoramento</h2>
-    <p>
-        Sistema web para rastreamento de lixo espacial, análise de risco orbital,
-        simulações probabilísticas e otimização de missões.
-    </p>
+    <h2>📡 Monitoramento Rápido</h2>
 
-    <br>
+    <table>
+        <tr>
+            <th>Indicador</th>
+            <th>Status</th>
+            <th>Ação Recomendada</th>
+        </tr>
 
-    <a href="/radar">
-        <button>Abrir Radar Orbital</button>
-    </a>
+        <tr>
+            <td>Grafo Orbital</td>
+            <td><span class="risk-low">Ativo</span></td>
+            <td>Analisar conexões entre objetos</td>
+        </tr>
 
-    <a href="/control-center">
-        <button>Centro de Controle</button>
-    </a>
+        <tr>
+            <td>Predição de Colisão</td>
+            <td><span class="risk-medium">Em observação</span></td>
+            <td>Executar Monte Carlo nos objetos críticos</td>
+        </tr>
+
+        <tr>
+            <td>Missão de Remoção</td>
+            <td><span class="risk-low">Disponível</span></td>
+            <td>Rodar Mission Planner</td>
+        </tr>
+
+        <tr>
+            <td>Relatório Executivo</td>
+            <td><span class="risk-low">Pronto</span></td>
+            <td>Exportar CSV ou Excel</td>
+        </tr>
+    </table>
 </div>
-
 
 {% endblock %}
