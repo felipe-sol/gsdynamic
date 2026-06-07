@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🛰 Rota Segura (Dijkstra)</h1>
+
+<div class="card">
+
+    {% if result %}
+
+        <h3>Caminho Encontrado</h3>
+
+        <ul>
+
+        {% for node in result.path %}
+
+            <li>{{ node }}</li>
+
+        {% endfor %}
+
+        </ul>
+
+        <h3>
+            Distância Total:
+            {{ result.distance }}
+        </h3>
+
+    {% else %}
+
+        <h3>
+            Nenhum caminho encontrado
+        </h3>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "ISS",
+    "altitude": 408,
+    "risk": 15
+  },
+  {
+    "id": 2,
+    "name": "STARLINK-1001",
+    "altitude": 550,
+    "risk": 30
+  },
+  {
+    "id": 3,
+    "name": "DEBRIS-A",
+    "altitude": 540,
+    "risk": 80
+  }
+]

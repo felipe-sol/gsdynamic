@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🖥 Centro de Controle da Missão</h1>
+
+<div class="control-grid">
+
+    <div class="card">
+        <h3>Horário da Missão</h3>
+        <h1 id="clock">00:00:00</h1>
+    </div>
+
+    <div class="card">
+        <h3>Satélites</h3>
+        <h1>{{ satellites }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Detritos</h3>
+        <h1>{{ debris }}</h1>
+    </div>
+
+    <div class="card alert-card">
+        <h3>Alertas Críticos</h3>
+        <h1>{{ critical }}</h1>
+    </div>
+
+</div>
+
+<div class="card mission-status">
+    <h2>Status Geral</h2>
+    <p>Sistema orbital em monitoramento contínuo.</p>
+    <p>Algoritmos ativos: Grafos, Dijkstra, Monte Carlo e Programação Dinâmica.</p>
+</div>
+
+<script>
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById("clock").innerText =
+        now.toLocaleTimeString("pt-BR");
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🌍 Radar Orbital Interativo</h1>
+
+<div class="card">
+    <p>
+        Visualização animada dos objetos orbitais monitorados pelo sistema.
+    </p>
+</div>
+
+<div class="radar-container">
+
+    <div class="earth">🌎</div>
+
+    {% for obj in objects %}
+
+        <div class="satellite sat{{ loop.index }}">
+
+            {% if obj.type == 'satellite' %}
+                🛰
+            {% else %}
+                ☄
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+<div class="card">
+    <h3>Legenda</h3>
+    <p>🛰 Satélite monitorado</p>
+    <p>☄ Detrito espacial</p>
+    <p>🌎 Terra</p>
+</div>
+
+{% endblock %}

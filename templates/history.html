@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>📜 Histórico de Eventos</h1>
+
+{% for event in events %}
+
+<div class="card">
+
+    {{ event }}
+
+</div>
+
+<br>
+
+{% endfor %}
+
+{% endblock %}

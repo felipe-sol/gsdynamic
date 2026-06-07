@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🕸 Grafo Orbital</h1>
+
+<div class="card">
+
+    <h3>Nós Orbitais</h3>
+
+    <ul>
+
+        {% for node in nodes %}
+
+        <li>{{ node }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+<br>
+
+<div class="card">
+
+    <h3>Conexões</h3>
+
+    <table>
+
+        <tr>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Distância</th>
+        </tr>
+
+        {% for edge in edges %}
+
+        <tr>
+
+            <td>{{ edge[0] }}</td>
+
+            <td>{{ edge[1] }}</td>
+
+            <td>{{ edge[2]['weight'] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

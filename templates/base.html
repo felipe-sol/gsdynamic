@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>OrbSafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🛰</div>
+            <div>
+                <h2>OrbSafe</h2>
+                <span>Space Debris Monitor</span>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a href="/">🚀 Dashboard</a>
+            <a href="/control-center">🖥 Centro de Controle</a>
+            <a href="/tracking">📡 Rastreamento</a>
+            <a href="/map">🌍 Mapa Orbital</a>
+            <a href="/radar">🛰 Radar</a>
+            <a href="/graph">🕸 Grafos</a>
+            <a href="/route">🛰 Dijkstra</a>
+            <a href="/greedy">🎯 Guloso</a>
+            <a href="/collision">☄ Monte Carlo</a>
+            <a href="/mission-planner">🧠 Programação Dinâmica</a>
+            <a href="/analytics">📊 Analytics</a>
+            <a href="/alerts">🚨 Alertas</a>
+            <a href="/prediction">☄️ Predição</a>
+            <a href="/history">📜 Histórico</a>
+        </nav>
+
+        <div class="mini-orbit">
+            <div class="mini-earth">🌎</div>
+            <div class="mini-sat sat-a">🛰</div>
+            <div class="mini-sat sat-b">☄</div>
+            <div class="mini-sat sat-c">🛰</div>
+        </div>
+
+        <p class="sidebar-footer">
+            Status: <span>Online</span>
+        </p>
+
+    </aside>
+
+    <main class="content">
+
+        <header class="topbar">
+            <div>
+                <h1>OrbitalGuard Control System</h1>
+                <p>Monitoramento inteligente de lixo espacial em órbita terrestre</p>
+            </div>
+
+            <div class="clock" id="clock">
+                00:00:00
+            </div>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>📡 Rastreamento Orbital</h1>
+
+<table>
+
+    <tr>
+
+        <th>Nome</th>
+
+        <th>Tipo</th>
+
+        <th>Altitude</th>
+
+        <th>Risco</th>
+
+    </tr>
+
+    {% for obj in objects %}
+
+    <tr>
+
+        <td>{{ obj.name }}</td>
+
+        <td>{{ obj.type }}</td>
+
+        <td>{{ obj.altitude }} km</td>
+
+        <td>{{ obj.risk }}</td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

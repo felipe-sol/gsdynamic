@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>☄️ Predição de Colisão Orbital</h1>
+
+{% for item in predictions %}
+
+<div class="card">
+
+    <h3>
+
+        {{ item.name }}
+
+    </h3>
+
+    <p>
+
+        Tipo:
+        {{ item.type }}
+
+    </p>
+
+    <p>
+
+        Risco:
+        {{ item.risk }}%
+
+    </p>
+
+    <div class="progress">
+
+        <div
+        class="progress-bar"
+
+        <div [style.width.%]="item.risk"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+{% endfor %}
+
+{% endblock %}

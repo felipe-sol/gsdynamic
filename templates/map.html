@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🌍 Mapa Orbital</h1>
+
+<div class="card">
+
+    {% for obj in objects %}
+
+        <p>
+
+        🛰 {{ obj.name }}
+
+        Altitude:
+        {{ obj.altitude }} km
+
+        </p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

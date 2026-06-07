@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🧠 Mission Planner</h1>
+
+<div class="card">
+
+    <form method="POST">
+
+        <label>
+
+            Combustível disponível
+
+        </label>
+
+        <br><br>
+
+        <input
+            type="number"
+            name="fuel"
+            required
+        >
+
+        <br><br>
+
+        <button type="submit">
+
+            Otimizar Missão
+
+        </button>
+
+    </form>
+
+</div>
+
+<br>
+
+{% if result %}
+
+<div class="card">
+
+    <h2>
+
+        Eficiência Máxima
+
+    </h2>
+
+    <h1>
+
+        {{ result }}
+
+    </h1>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

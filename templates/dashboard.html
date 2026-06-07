@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🚀 Dashboard Orbital</h1>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Satélites Monitorados</h3>
+        <h1>{{ satellites }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Detritos Espaciais</h3>
+        <h1>{{ debris }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Algoritmos Ativos</h3>
+        <h1>4</h1>
+    </div>
+
+    <div class="card">
+        <h3>Status</h3>
+        <h1>🟢 Online</h1>
+    </div>
+
+</div>
+
+<div class="card">
+    <h2>Centro de Monitoramento</h2>
+    <p>
+        Sistema web para rastreamento de lixo espacial, análise de risco orbital,
+        simulações probabilísticas e otimização de missões.
+    </p>
+
+    <br>
+
+    <a href="/radar">
+        <button>Abrir Radar Orbital</button>
+    </a>
+
+    <a href="/control-center">
+        <button>Centro de Controle</button>
+    </a>
+</div>
+
+{% endblock %}

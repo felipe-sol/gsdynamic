@@ -1,0 +1,37 @@
+[
+    {
+        "id":1,
+        "name":"ISS",
+        "type":"satellite",
+        "altitude":408,
+        "risk":10
+    },
+    {
+        "id":2,
+        "name":"STARLINK-1001",
+        "type":"satellite",
+        "altitude":450,
+        "risk":15
+    },
+    {
+        "id":3,
+        "name":"STARLINK-1002",
+        "type":"satellite",
+        "altitude":520,
+        "risk":20
+    },
+    {
+        "id":4,
+        "name":"DEBRIS-A",
+        "type":"debris",
+        "altitude":540,
+        "risk":80
+    },
+    {
+        "id":5,
+        "name":"DEBRIS-B",
+        "type":"debris",
+        "altitude":600,
+        "risk":65
+    }
+]

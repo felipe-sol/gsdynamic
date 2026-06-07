@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>📊 Analytics Orbital</h1>
+
+<div class="card">
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+<script>
+
+const ctx =
+document.getElementById(
+'riskChart'
+);
+
+new Chart(ctx, {
+
+type:'bar',
+
+data:{
+
+labels:[
+'ISS',
+'STARLINK',
+'DEBRIS-A',
+'DEBRIS-B'
+],
+
+datasets:[{
+
+label:'Nível de Risco',
+
+data:[10,25,80,65]
+
+}]
+
+}
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🚨 Alertas Orbitais</h1>
+
+{% for alert in alerts %}
+
+<div class="card">
+
+    {{ alert }}
+
+</div>
+
+<br>
+
+{% endfor %}
+
+{% endblock %}

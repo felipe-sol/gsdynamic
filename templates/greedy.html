@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🎯 Algoritmo Guloso</h1>
+
+<p>
+Priorização dos detritos com maior risco para remoção orbital.
+</p>
+
+<table>
+    <tr>
+        <th>Prioridade</th>
+        <th>Objeto</th>
+        <th>Risco</th>
+    </tr>
+
+    {% for obj in priorities %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ obj.name }}</td>
+        <td>{{ obj.risk }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
