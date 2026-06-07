@@ -446,17 +446,38 @@ button:hover{
     filter:drop-shadow(0 0 10px #00d4ff);
 }
 
-.obj1{ transform:rotate(15deg) translateX(130px) rotate(-15deg); }
-.obj2{ transform:rotate(80deg) translateX(225px) rotate(-80deg); }
-.obj3{ transform:rotate(145deg) translateX(225px) rotate(-145deg); }
-.obj4{ transform:rotate(210deg) translateX(130px) rotate(-210deg); }
-.obj5{ transform:rotate(290deg) translateX(225px) rotate(-290deg); }
-.obj6{ transform:rotate(330deg) translateX(325px) rotate(-330deg); }
-.obj7{ transform:rotate(40deg) translateX(325px) rotate(-40deg); }
-.obj8{ transform:rotate(120deg) translateX(130px) rotate(-120deg); }
-.obj9{ transform:rotate(250deg) translateX(325px) rotate(-250deg); }
-.obj10{ transform:rotate(310deg) translateX(130px) rotate(-310deg); }
+.map-object.leo{
+    color:#00d4ff;
+}
 
+.map-object.meo{
+    color:#ffd000;
+}
+
+.map-object.geo{
+    color:#ff7bff;
+}
+
+.map-object.leo.pos1{ transform:rotate(10deg) translateX(115px) rotate(-10deg); }
+.map-object.leo.pos2{ transform:rotate(80deg) translateX(125px) rotate(-80deg); }
+.map-object.leo.pos3{ transform:rotate(150deg) translateX(135px) rotate(-150deg); }
+.map-object.leo.pos4{ transform:rotate(220deg) translateX(145px) rotate(-220deg); }
+.map-object.leo.pos5{ transform:rotate(290deg) translateX(155px) rotate(-290deg); }
+.map-object.leo.pos6{ transform:rotate(340deg) translateX(130px) rotate(-340deg); }
+.map-object.leo.pos7{ transform:rotate(45deg) translateX(150px) rotate(-45deg); }
+.map-object.leo.pos8{ transform:rotate(190deg) translateX(120px) rotate(-190deg); }
+
+.map-object.meo.pos1{ transform:rotate(20deg) translateX(225px) rotate(-20deg); }
+.map-object.meo.pos2{ transform:rotate(90deg) translateX(235px) rotate(-90deg); }
+.map-object.meo.pos3{ transform:rotate(160deg) translateX(245px) rotate(-160deg); }
+.map-object.meo.pos4{ transform:rotate(230deg) translateX(255px) rotate(-230deg); }
+.map-object.meo.pos5{ transform:rotate(300deg) translateX(265px) rotate(-300deg); }
+
+.map-object.geo.pos1{ transform:rotate(35deg) translateX(325px) rotate(-35deg); }
+.map-object.geo.pos2{ transform:rotate(110deg) translateX(330px) rotate(-110deg); }
+.map-object.geo.pos3{ transform:rotate(185deg) translateX(335px) rotate(-185deg); }
+.map-object.geo.pos4{ transform:rotate(260deg) translateX(340px) rotate(-260deg); }
+.map-object.geo.pos5{ transform:rotate(330deg) translateX(345px) rotate(-330deg); }
 .tracking-filters{
 
 display:flex;

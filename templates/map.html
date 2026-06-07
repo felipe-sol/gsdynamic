@@ -46,16 +46,18 @@
 
     {% for obj in objects %}
 
-        <div class="map-object obj{{ loop.index }}"
-             title="{{ obj.name }} | {{ obj.altitude }} km | Risco {{ obj.risk }}">
+    <div
+        class="map-object {{ obj.orbit_region|lower }} pos{{ loop.index }}"
+        title="{{ obj.name }} | {{ obj.orbit_region }} | {{ obj.altitude }} km | Risco {{ obj.risk }}"
+        >
 
-            {% if obj.type == "satellite" %}
-                🛰
-            {% else %}
-                ☄
-            {% endif %}
+        {% if obj.type == "satellite" %}
+            🛰
+        {% else %}
+            ☄
+        {% endif %}
 
-        </div>
+    </div>
 
     {% endfor %}
 

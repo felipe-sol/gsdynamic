@@ -135,13 +135,27 @@ def control_center():
 def orbital_map():
     objects = get_objects()
 
-    leo = len([o for o in objects if o["altitude"] <= 2000])
-    meo = len([o for o in objects if 2000 < o["altitude"] <= 35786])
-    geo = len([o for o in objects if o["altitude"] > 35786])
+    mapped_objects = []
+
+    for obj in objects:
+        item = obj.copy()
+
+        if obj["altitude"] <= 2000:
+            item["orbit_region"] = "LEO"
+        elif obj["altitude"] <= 35786:
+            item["orbit_region"] = "MEO"
+        else:
+            item["orbit_region"] = "GEO"
+
+        mapped_objects.append(item)
+
+    leo = len([o for o in mapped_objects if o["orbit_region"] == "LEO"])
+    meo = len([o for o in mapped_objects if o["orbit_region"] == "MEO"])
+    geo = len([o for o in mapped_objects if o["orbit_region"] == "GEO"])
 
     return render_template(
         "map.html",
-        objects=objects,
+        objects=mapped_objects,
         leo=leo,
         meo=meo,
         geo=geo
