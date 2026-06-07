@@ -4,37 +4,71 @@
 
 <h1>🌍 Radar Orbital Interativo</h1>
 
-<div class="card">
-    <p>
-        Visualização animada dos objetos orbitais monitorados pelo sistema.
-    </p>
-</div>
+<div class="radar-dashboard">
 
-<div class="radar-container">
+    <div class="radar-panel">
 
-    <div class="earth">🌎</div>
+        <h2>Controles do Radar</h2>
 
-    {% for obj in objects %}
+        <button onclick="filterObjects('all')">Todos</button>
+        <button onclick="filterObjects('satellite')">Satélites</button>
+        <button onclick="filterObjects('debris')">Detritos</button>
 
-        <div class="satellite sat{{ loop.index }}">
+        <hr>
 
-            {% if obj.type == 'satellite' %}
+        <h3>Objeto Selecionado</h3>
+
+        <p><strong>Nome:</strong> <span id="info-name">Nenhum</span></p>
+        <p><strong>Tipo:</strong> <span id="info-type">-</span></p>
+        <p><strong>Altitude:</strong> <span id="info-altitude">-</span></p>
+        <p><strong>Risco:</strong> <span id="info-risk">-</span></p>
+
+    </div>
+
+    <div class="radar-container-pro">
+
+        <div class="radar-sweep"></div>
+
+        <div class="radar-ring ring-1"></div>
+        <div class="radar-ring ring-2"></div>
+        <div class="radar-ring ring-3"></div>
+
+        <div class="earth-pro">🌎</div>
+
+        {% for obj in objects %}
+
+        <div
+            class="radar-object radar-obj{{ loop.index }} {{ obj.type }}"
+            data-name="{{ obj.name }}"
+            data-type="{{ obj.type }}"
+            data-altitude="{{ obj.altitude }}"
+            data-risk="{{ obj.risk }}"
+            onclick="showObjectInfo(this)"
+        >
+            {% if obj.type == "satellite" %}
                 🛰
             {% else %}
                 ☄
             {% endif %}
-
         </div>
 
-    {% endfor %}
+        {% endfor %}
+
+    </div>
 
 </div>
 
 <div class="card">
-    <h3>Legenda</h3>
+
+    <h2>Legenda Operacional</h2>
+
     <p>🛰 Satélite monitorado</p>
     <p>☄ Detrito espacial</p>
     <p>🌎 Terra</p>
+    <p>Feixe verde: varredura ativa do radar</p>
+
 </div>
+
+<script src="{{ url_for('static', filename='js/radar.js') }}"></script>
 
 {% endblock %}

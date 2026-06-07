@@ -1037,3 +1037,207 @@ canvas{
         grid-template-columns:1fr;
     }
 }
+
+.radar-dashboard{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:25px;
+    align-items:start;
+}
+
+.radar-panel{
+    background:rgba(17,27,52,0.95);
+    border:1px solid rgba(0,212,255,0.25);
+    border-radius:22px;
+    padding:22px;
+    box-shadow:0 0 28px rgba(0,212,255,0.12);
+}
+
+.radar-panel h2{
+    color:#00d4ff;
+    margin-bottom:15px;
+}
+
+.radar-panel h3{
+    margin-top:18px;
+    margin-bottom:10px;
+}
+
+.radar-panel p{
+    margin:8px 0;
+    color:#dbe8ff;
+}
+
+.radar-panel button{
+    width:100%;
+    margin-bottom:10px;
+}
+
+.radar-container-pro{
+    position:relative;
+    width:700px;
+    height:700px;
+    max-width:100%;
+    margin:auto;
+    border-radius:50%;
+    background:
+        radial-gradient(circle, rgba(0,212,255,0.15), transparent 18%),
+        radial-gradient(circle, rgba(0,255,153,0.08), transparent 62%),
+        rgba(5,8,22,0.95);
+    border:2px solid rgba(0,212,255,0.45);
+    overflow:hidden;
+    box-shadow:
+        inset 0 0 50px rgba(0,212,255,0.12),
+        0 0 45px rgba(0,212,255,0.2);
+}
+
+.radar-container-pro::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    width:100%;
+    height:1px;
+    background:rgba(0,212,255,0.16);
+}
+
+.radar-container-pro::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:0;
+    width:1px;
+    height:100%;
+    background:rgba(0,212,255,0.16);
+}
+
+.radar-ring{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    border:1px dashed rgba(0,212,255,0.3);
+    border-radius:50%;
+}
+
+.ring-1{
+    width:230px;
+    height:230px;
+}
+
+.ring-2{
+    width:430px;
+    height:430px;
+}
+
+.ring-3{
+    width:630px;
+    height:630px;
+}
+
+.earth-pro{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:95px;
+    z-index:8;
+    filter:drop-shadow(0 0 20px rgba(0,212,255,0.5));
+}
+
+.radar-sweep{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:50%;
+    height:50%;
+    transform-origin:0% 0%;
+    background:linear-gradient(
+        45deg,
+        rgba(0,255,153,0.35),
+        rgba(0,255,153,0.05),
+        transparent 70%
+    );
+    animation:radarSweep 4s linear infinite;
+    z-index:3;
+}
+
+@keyframes radarSweep{
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.radar-object{
+    position:absolute;
+    top:50%;
+    left:50%;
+    font-size:30px;
+    z-index:12;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.radar-object:hover{
+    transform:scale(1.4);
+    filter:drop-shadow(0 0 15px #00d4ff);
+}
+
+.selected-object{
+    filter:drop-shadow(0 0 18px #00ff99);
+    transform:scale(1.5);
+}
+
+.radar-object.debris{
+    animation-duration:18s;
+}
+
+.radar-object.satellite{
+    animation-duration:26s;
+}
+
+.radar-obj1{ animation:proOrbit1 12s linear infinite; }
+.radar-obj2{ animation:proOrbit2 16s linear infinite; }
+.radar-obj3{ animation:proOrbit3 20s linear infinite; }
+.radar-obj4{ animation:proOrbit4 24s linear infinite; }
+.radar-obj5{ animation:proOrbit5 28s linear infinite; }
+.radar-obj6{ animation:proOrbit1 32s linear infinite; }
+.radar-obj7{ animation:proOrbit2 36s linear infinite; }
+.radar-obj8{ animation:proOrbit3 40s linear infinite; }
+.radar-obj9{ animation:proOrbit4 44s linear infinite; }
+.radar-obj10{ animation:proOrbit5 48s linear infinite; }
+
+@keyframes proOrbit1{
+    from{ transform:rotate(0deg) translateX(160px) rotate(0deg); }
+    to{ transform:rotate(360deg) translateX(160px) rotate(-360deg); }
+}
+
+@keyframes proOrbit2{
+    from{ transform:rotate(80deg) translateX(230px) rotate(-80deg); }
+    to{ transform:rotate(440deg) translateX(230px) rotate(-440deg); }
+}
+
+@keyframes proOrbit3{
+    from{ transform:rotate(160deg) translateX(300px) rotate(-160deg); }
+    to{ transform:rotate(520deg) translateX(300px) rotate(-520deg); }
+}
+
+@keyframes proOrbit4{
+    from{ transform:rotate(240deg) translateX(210px) rotate(-240deg); }
+    to{ transform:rotate(600deg) translateX(210px) rotate(-600deg); }
+}
+
+@keyframes proOrbit5{
+    from{ transform:rotate(310deg) translateX(280px) rotate(-310deg); }
+    to{ transform:rotate(670deg) translateX(280px) rotate(-670deg); }
+}
+
+@media(max-width:1000px){
+    .radar-dashboard{
+        grid-template-columns:1fr;
+    }
+}
