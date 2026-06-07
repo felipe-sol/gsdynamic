@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>📄 Relatório Executivo Orbital</h1>
+
+<div class="card">
+    <h2>Resumo da Missão</h2>
+    <p>
+        Este relatório consolida os principais dados de monitoramento orbital,
+        classificação de risco, distribuição por órbita e recomendações de ação.
+    </p>
+
+    <br>
+
+    <a href="/report/export">
+    <button>⬇ Exportar CSV</button>
+</a>
+
+<a href="/report/export/excel">
+    <button>⬇ Exportar Excel Premium</button>
+</a>
+</div>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Total de Objetos</h3>
+        <h1>{{ total }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Satélites</h3>
+        <h1>{{ satellites }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Detritos</h3>
+        <h1>{{ debris }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Risco Médio</h3>
+        <h1>{{ average_risk }}</h1>
+    </div>
+
+</div>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Objetos em LEO</h3>
+        <h1>{{ leo }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Objetos em MEO</h3>
+        <h1>{{ meo }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Objetos em GEO</h3>
+        <h1>{{ geo }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Alto Risco</h3>
+        <h1>{{ high_risk|length }}</h1>
+    </div>
+
+</div>
+
+<div class="card">
+    <h2>Insight Principal</h2>
+
+    <p>
+        Objeto mais crítico:
+        <strong>{{ most_dangerous.name }}</strong>
+    </p>
+
+    <p>
+        Risco:
+        <strong>{{ most_dangerous.risk }}</strong>
+    </p>
+
+    <p>
+        Altitude:
+        <strong>{{ most_dangerous.altitude }} km</strong>
+    </p>
+</div>
+
+<div class="card">
+    <h2>Recomendação do Sistema</h2>
+
+    <p>
+        {{ recommendation }}
+    </p>
+</div>
+
+<div class="card">
+    <h2>Algoritmos Utilizados</h2>
+
+    <table>
+        <tr>
+            <th>Algoritmo</th>
+            <th>Aplicação no Projeto</th>
+        </tr>
+
+        <tr>
+            <td>Dijkstra</td>
+            <td>Cálculo de caminho mínimo entre objetos orbitais.</td>
+        </tr>
+
+        <tr>
+            <td>Guloso</td>
+            <td>Priorização dos detritos de maior risco.</td>
+        </tr>
+
+        <tr>
+            <td>Monte Carlo</td>
+            <td>Simulação probabilística de colisões.</td>
+        </tr>
+
+        <tr>
+            <td>Programação Dinâmica</td>
+            <td>Otimização de combustível e seleção de manobras.</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h2>Base de Dados Monitorada</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Altitude</th>
+            <th>Risco</th>
+            <th>Classificação</th>
+        </tr>
+
+        {% for obj in objects %}
+
+        <tr>
+            <td>{{ obj.id }}</td>
+            <td>{{ obj.name }}</td>
+            <td>{{ obj.type }}</td>
+            <td>{{ obj.altitude }} km</td>
+
+            <td>
+                {% if obj.risk >= 70 %}
+                    <span class="risk-high">🔴 {{ obj.risk }}</span>
+                {% elif obj.risk >= 40 %}
+                    <span class="risk-medium">🟡 {{ obj.risk }}</span>
+                {% else %}
+                    <span class="risk-low">🟢 {{ obj.risk }}</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {% if obj.risk >= 70 %}
+                    Alto
+                {% elif obj.risk >= 40 %}
+                    Médio
+                {% else %}
+                    Baixo
+                {% endif %}
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

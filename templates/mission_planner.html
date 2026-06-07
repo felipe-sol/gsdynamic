@@ -5,53 +5,54 @@
 <h1>🧠 Mission Planner</h1>
 
 <div class="card">
-
     <form method="POST">
-
-        <label>
-
-            Combustível disponível
-
-        </label>
-
+        <label>Combustível disponível</label>
         <br><br>
 
-        <input
-            type="number"
-            name="fuel"
-            required
-        >
+        <input type="number" name="fuel" placeholder="Ex: 100" required>
 
         <br><br>
 
         <button type="submit">
-
             Otimizar Missão
-
         </button>
-
     </form>
-
 </div>
-
-<br>
 
 {% if result %}
 
+<div class="cards">
+
+    <div class="card">
+        <h3>Eficiência Máxima</h3>
+        <h1>{{ result.max_benefit }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Combustível Usado</h3>
+        <h1>{{ result.fuel_used }}</h1>
+    </div>
+
+</div>
+
 <div class="card">
+    <h2>Manobras Selecionadas</h2>
 
-    <h2>
+    <table>
+        <tr>
+            <th>Manobra</th>
+            <th>Combustível</th>
+            <th>Benefício</th>
+        </tr>
 
-        Eficiência Máxima
-
-    </h2>
-
-    <h1>
-
-        {{ result }}
-
-    </h1>
-
+        {% for item in result.selected %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.fuel }}</td>
+            <td>{{ item.benefit }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 
 {% endif %}
