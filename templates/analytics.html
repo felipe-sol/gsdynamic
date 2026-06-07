@@ -4,44 +4,25 @@
 
 <h1>📊 Analytics Orbital</h1>
 
-<div class="card">
+<div class="analytics-grid">
 
-<canvas id="riskChart"></canvas>
+    <div class="card">
+        <h3>Risco por Objeto</h3>
+        <canvas id="riskChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Satélites x Detritos</h3>
+        <canvas id="typeChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Distribuição Orbital</h3>
+        <canvas id="orbitChart"></canvas>
+    </div>
 
 </div>
 
-<script>
-
-const ctx =
-document.getElementById(
-'riskChart'
-);
-
-new Chart(ctx, {
-
-type:'bar',
-
-data:{
-
-labels:[
-'ISS',
-'STARLINK',
-'DEBRIS-A',
-'DEBRIS-B'
-],
-
-datasets:[{
-
-label:'Nível de Risco',
-
-data:[10,25,80,65]
-
-}]
-
-}
-
-});
-
-</script>
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
 
 {% endblock %}

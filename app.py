@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import jsonify
 
 from services.dynamic_programming import optimize_fuel
 from services.data_service import get_objects
@@ -182,20 +183,86 @@ def analytics():
 
     objects = get_objects()
 
-    total_risk = sum(
+    satellites = len([
+        obj for obj in objects
+        if obj["type"] == "satellite"
+    ])
+
+    debris = len([
+        obj for obj in objects
+        if obj["type"] == "debris"
+    ])
+
+    names = [
+        obj["name"]
+        for obj in objects
+    ]
+
+    risks = [
         obj["risk"]
         for obj in objects
-    )
+    ]
+
+    leo = len([
+        obj for obj in objects
+        if obj["altitude"] <= 2000
+    ])
+
+    meo = len([
+        obj for obj in objects
+        if 2000 < obj["altitude"] <= 35786
+    ])
+
+    geo = len([
+        obj for obj in objects
+        if obj["altitude"] > 35786
+    ])
 
     average_risk = round(
-        total_risk / len(objects),
+        sum(risks) / len(risks),
         2
+    )
+
+    return render_template(
+        "analytics.html",
+        satellites=satellites,
+        debris=debris,
+        names=names,
+        risks=risks,
+        leo=leo,
+        meo=meo,
+        geo=geo,
+        average_risk=average_risk
     )
 
     return render_template(
         "analytics.html",
         average_risk=average_risk
     )
+
+@app.route("/api/analytics")
+def api_analytics():
+    objects = get_objects()
+
+    satellites = len([o for o in objects if o["type"] == "satellite"])
+    debris = len([o for o in objects if o["type"] == "debris"])
+
+    names = [o["name"] for o in objects]
+    risks = [o["risk"] for o in objects]
+
+    leo = len([o for o in objects if o["altitude"] <= 2000])
+    meo = len([o for o in objects if 2000 < o["altitude"] <= 35786])
+    geo = len([o for o in objects if o["altitude"] > 35786])
+
+    return jsonify({
+        "names": names,
+        "risks": risks,
+        "satellites": satellites,
+        "debris": debris,
+        "leo": leo,
+        "meo": meo,
+        "geo": geo
+    })
 
 @app.route("/collision")
 def collision():
