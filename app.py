@@ -73,17 +73,39 @@ def prediction():
 
 @app.route("/history")
 def history():
-
     events = [
-
-        "STARLINK-1001 realizou manobra evasiva.",
-
-        "DEBRIS-A entrou em zona crítica.",
-
-        "ISS alterou altitude orbital.",
-
-        "Risco reduzido após correção orbital."
-
+        {
+            "time": "08:15:22",
+            "type": "Alerta",
+            "severity": "Alta",
+            "title": "DEBRIS-A entrou em zona crítica",
+            "description": "Objeto com risco orbital elevado próximo a satélites em LEO.",
+            "action": "Executar Monte Carlo e priorizar no algoritmo guloso."
+        },
+        {
+            "time": "09:42:10",
+            "type": "Manobra",
+            "severity": "Média",
+            "title": "STARLINK-1001 recalculou trajetória",
+            "description": "Rota orbital ajustada para reduzir proximidade com detrito.",
+            "action": "Registrar alteração no relatório executivo."
+        },
+        {
+            "time": "10:30:48",
+            "type": "Dijkstra",
+            "severity": "Baixa",
+            "title": "Caminho mínimo calculado",
+            "description": "Algoritmo de Dijkstra encontrou rota orbital de menor custo.",
+            "action": "Validar rota segura no painel de grafos."
+        },
+        {
+            "time": "11:05:33",
+            "type": "Sistema",
+            "severity": "Baixa",
+            "title": "Relatório exportado",
+            "description": "Relatório CSV/Excel gerado com dados e insights operacionais.",
+            "action": "Disponibilizar arquivo para análise."
+        }
     ]
 
     return render_template(

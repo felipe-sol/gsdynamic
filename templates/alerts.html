@@ -2,18 +2,115 @@
 
 {% block content %}
 
-<h1>🚨 Alertas Orbitais</h1>
+<h1>🚨 Central de Alertas Orbitais</h1>
 
-{% for alert in alerts %}
+<div class="cards">
 
-<div class="card">
+    <div class="card alert-critical">
+        <h3>Alertas Críticos</h3>
+        <h1>{{ alerts|length }}</h1>
+        <p>Objetos com risco elevado</p>
+    </div>
 
-    {{ alert }}
+    <div class="card">
+        <h3>Status</h3>
+        <h1>🟠 Atenção</h1>
+        <p>Monitoramento contínuo ativo</p>
+    </div>
+
+    <div class="card">
+        <h3>Resposta Recomendada</h3>
+        <h1>Priorizar</h1>
+        <p>Detritos de maior risco orbital</p>
+    </div>
 
 </div>
 
-<br>
+<div class="card">
+    <h2>Resumo Operacional</h2>
+    <p>
+        A central de alertas identifica objetos com risco orbital elevado
+        e recomenda ações de monitoramento, simulação e priorização de remoção.
+    </p>
+</div>
 
-{% endfor %}
+{% if alerts %}
+
+<div class="alert-list">
+
+    {% for alert in alerts %}
+
+    <div class="alert-item">
+
+        <div class="alert-icon">
+            🚨
+        </div>
+
+        <div class="alert-content">
+
+            <h3>{{ alert }}</h3>
+
+            <p>
+                Severidade:
+                <span class="risk-high">ALTA</span>
+            </p>
+
+            <p>
+                Ação recomendada:
+                executar simulação Monte Carlo e priorizar no algoritmo guloso.
+            </p>
+
+        </div>
+
+        <div class="alert-status">
+            CRÍTICO
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="card">
+    <h2>✅ Nenhum alerta crítico</h2>
+    <p>
+        O cenário orbital atual está dentro dos limites aceitáveis de segurança.
+    </p>
+</div>
+
+{% endif %}
+
+<div class="card">
+    <h2>Plano de Resposta</h2>
+
+    <table>
+        <tr>
+            <th>Nível</th>
+            <th>Critério</th>
+            <th>Ação</th>
+        </tr>
+
+        <tr>
+            <td><span class="risk-high">Alto</span></td>
+            <td>Risco acima de 70</td>
+            <td>Simulação imediata e priorização de remoção</td>
+        </tr>
+
+        <tr>
+            <td><span class="risk-medium">Médio</span></td>
+            <td>Risco entre 40 e 69</td>
+            <td>Monitoramento frequente</td>
+        </tr>
+
+        <tr>
+            <td><span class="risk-low">Baixo</span></td>
+            <td>Risco abaixo de 40</td>
+            <td>Monitoramento padrão</td>
+        </tr>
+    </table>
+</div>
 
 {% endblock %}

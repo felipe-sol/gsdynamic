@@ -2,18 +2,73 @@
 
 {% block content %}
 
-<h1>📜 Histórico de Eventos</h1>
+<h1>📜 Histórico de Eventos Orbitais</h1>
 
-{% for event in events %}
+<div class="cards">
 
-<div class="card">
+    <div class="card">
+        <h3>Total de Eventos</h3>
+        <h1>{{ events|length }}</h1>
+    </div>
 
-    {{ event }}
+    <div class="card">
+        <h3>Status</h3>
+        <h1>Monitorado</h1>
+    </div>
+
+    <div class="card">
+        <h3>Último Evento</h3>
+        <h1>{{ events[-1].type }}</h1>
+    </div>
 
 </div>
 
-<br>
+<div class="timeline">
 
-{% endfor %}
+    {% for event in events %}
+
+    <div class="timeline-item">
+
+        <div class="timeline-dot
+            {% if event.severity == 'Alta' %}
+                dot-high
+            {% elif event.severity == 'Média' %}
+                dot-medium
+            {% else %}
+                dot-low
+            {% endif %}
+        "></div>
+
+        <div class="timeline-content">
+
+            <div class="timeline-header">
+                <span class="event-time">{{ event.time }}</span>
+                <span class="event-type">{{ event.type }}</span>
+
+                {% if event.severity == 'Alta' %}
+                    <span class="event-severity risk-high">Alta</span>
+                {% elif event.severity == 'Média' %}
+                    <span class="event-severity risk-medium">Média</span>
+                {% else %}
+                    <span class="event-severity risk-low">Baixa</span>
+                {% endif %}
+            </div>
+
+            <h3>{{ event.title }}</h3>
+
+            <p>{{ event.description }}</p>
+
+            <div class="event-action">
+                <strong>Ação recomendada:</strong>
+                {{ event.action }}
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
 
 {% endblock %}
