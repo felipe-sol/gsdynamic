@@ -5,11 +5,137 @@
 <h1>☄ Simulação Monte Carlo</h1>
 
 <div class="card">
+    <h2>Configurar Simulação</h2>
 
-    <h2>Probabilidade de Colisão</h2>
+    <form method="POST">
 
-    <h1>{{ probability }}%</h1>
+        <div class="route-form">
+
+            <div>
+                <label>Objeto orbital</label>
+
+                <select name="object_name" required>
+                    {% for obj in objects %}
+                        <option value="{{ obj.name }}">
+                            {{ obj.name }} — risco {{ obj.risk }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label>Número de simulações</label>
+
+                <input
+                    type="number"
+                    name="simulations"
+                    value="1000"
+                    min="100"
+                    max="50000"
+                    required>
+            </div>
+
+            <div class="route-button">
+                <button type="submit">
+                    Executar Monte Carlo
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+{% if result %}
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Objeto Analisado</h3>
+        <h1>{{ result.object.name }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Simulações</h3>
+        <h1>{{ result.simulations }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Colisões Simuladas</h3>
+        <h1>{{ result.collisions }}</h1>
+    </div>
+
+    <div class="card alert-critical">
+        <h3>Probabilidade</h3>
+        <h1>{{ result.probability }}%</h1>
+        <p>{{ result.classification }}</p>
+    </div>
 
 </div>
 
+<div class="card">
+    <h2>Indicador de Risco Probabilístico</h2>
+
+    <div class="progress">
+        <div
+            class="progress-bar"
+            data-width="{{ probability_width }}">
+        </div>
+    </div>
+
+    <br>
+
+    <p>
+        A simulação executa milhares de cenários variando distância relativa,
+        velocidade e densidade orbital para estimar a chance de colisão.
+    </p>
+</div>
+
+<div class="card">
+    <h2>Amostras da Simulação</h2>
+
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Distância</th>
+            <th>Velocidade</th>
+            <th>Densidade</th>
+            <th>Score</th>
+            <th>Resultado</th>
+        </tr>
+
+        {% for item in result.samples %}
+
+        <tr>
+            <td>{{ item.simulation }}</td>
+            <td>{{ item.distance }}</td>
+            <td>{{ item.velocity_factor }}</td>
+            <td>{{ item.density }}</td>
+            <td>{{ item.collision_score }}</td>
+            <td>
+                {% if item.result == "Colisão" %}
+                    <span class="risk-high">☄ {{ item.result }}</span>
+                {% else %}
+                    <span class="risk-low">🟢 {{ item.result }}</span>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+
+{% endif %}
+
+<div class="card">
+    <h2>Como o Monte Carlo é usado?</h2>
+
+    <p>
+        O algoritmo randomizado de Monte Carlo gera muitos cenários possíveis
+        para estimar a probabilidade de colisão. Em vez de usar apenas um valor
+        fixo, ele varia fatores como distância, velocidade relativa e densidade
+        de detritos, produzindo uma estimativa probabilística.
+    </p>
+</div>
+<script src="{{ url_for('static', filename='js/collision.js') }}"></script>
 {% endblock %}

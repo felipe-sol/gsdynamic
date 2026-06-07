@@ -4,52 +4,137 @@
 
 <h1>🕸 Grafo Orbital</h1>
 
-<div class="card">
+<div class="cards">
 
-    <h3>Nós Orbitais</h3>
+    <div class="card">
+        <h3>Nós Totais</h3>
+        <h1>{{ nodes|length }}</h1>
+    </div>
 
-    <ul>
+    <div class="card">
+        <h3>Satélites</h3>
+        <h1>{{ satellites }}</h1>
+    </div>
 
-        {% for node in nodes %}
+    <div class="card">
+        <h3>Detritos</h3>
+        <h1>{{ debris }}</h1>
+    </div>
 
-        <li>{{ node }}</li>
-
-        {% endfor %}
-
-    </ul>
+    <div class="card">
+        <h3>Conexões</h3>
+        <h1>{{ total_edges }}</h1>
+    </div>
 
 </div>
 
-<br>
+<div class="card">
+    <h2>Visualização da Rede Orbital</h2>
+
+    <div class="graph-stage">
+
+        <div class="graph-core">
+            🌎
+        </div>
+
+        {% for node, data in nodes %}
+
+            <div class="graph-node graph-node-{{ loop.index }}
+                {% if data.type == 'satellite' %}
+                    graph-satellite
+                {% else %}
+                    graph-debris
+                {% endif %}
+            " title="{{ node }}">
+
+                {% if data.type == 'satellite' %}
+                    🛰
+                {% else %}
+                    ☄
+                {% endif %}
+
+                <span>{{ node }}</span>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="graph-legend">
+        <span>🌎 Terra</span>
+        <span>🛰 Satélite</span>
+        <span>☄ Detrito espacial</span>
+        <span>Linhas conceituais: proximidade orbital</span>
+    </div>
+</div>
 
 <div class="card">
+    <h2>Resumo Técnico</h2>
 
-    <h3>Conexões</h3>
+    <p>
+        O grafo orbital modela satélites e detritos como nós. As conexões
+        representam proximidade de altitude entre os objetos. Essa estrutura
+        permite aplicar algoritmos de caminho mínimo, priorização e análise
+        de risco orbital.
+    </p>
+
+    <p>
+        Densidade do grafo:
+        <strong>{{ density }}</strong>
+    </p>
+</div>
+
+<div class="card">
+    <h2>Conexões do Grafo</h2>
 
     <table>
-
         <tr>
             <th>Origem</th>
             <th>Destino</th>
-            <th>Distância</th>
+            <th>Custo / Diferença de Altitude</th>
         </tr>
 
         {% for edge in edges %}
 
         <tr>
-
             <td>{{ edge[0] }}</td>
-
             <td>{{ edge[1] }}</td>
-
-            <td>{{ edge[2]['weight'] }}</td>
-
+            <td>{{ edge[2]["weight"] }}</td>
         </tr>
 
         {% endfor %}
-
     </table>
+</div>
 
+<div class="card">
+    <h2>Nós do Grafo</h2>
+
+    <table>
+        <tr>
+            <th>Objeto</th>
+            <th>Tipo</th>
+            <th>Altitude</th>
+        </tr>
+
+        {% for node, data in nodes %}
+
+        <tr>
+            <td>{{ node }}</td>
+
+            <td>
+                {% if data.type == 'satellite' %}
+                    🛰 Satélite
+                {% else %}
+                    ☄ Detrito
+                {% endif %}
+            </td>
+
+            <td>{{ data.altitude }} km</td>
+        </tr>
+
+        {% endfor %}
+    </table>
 </div>
 
 {% endblock %}

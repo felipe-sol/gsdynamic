@@ -2,37 +2,136 @@
 
 {% block content %}
 
-<h1>🛰 Rota Segura (Dijkstra)</h1>
+<h1>🛰 Rota Segura com Dijkstra</h1>
 
 <div class="card">
+    <h2>Configurar Rota Orbital</h2>
 
-    {% if result %}
+    <form method="POST">
 
-        <h3>Caminho Encontrado</h3>
+        <div class="route-form">
 
-        <ul>
+            <div>
+                <label>Objeto de origem</label>
+                <select name="start" required>
+                    {% for obj in objects %}
+                        <option value="{{ obj.name }}">
+                            {{ obj.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label>Objeto de destino</label>
+                <select name="end" required>
+                    {% for obj in objects %}
+                        <option value="{{ obj.name }}">
+                            {{ obj.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="route-button">
+                <button type="submit">
+                    Calcular Caminho Mínimo
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+{% if result %}
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Origem</h3>
+        <h1>{{ start }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Destino</h3>
+        <h1>{{ end }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Custo Total</h3>
+        <h1>{{ result.distance }}</h1>
+    </div>
+
+</div>
+
+<div class="card">
+    <h2>Caminho Encontrado</h2>
+
+    <div class="route-path">
 
         {% for node in result.path %}
 
-            <li>{{ node }}</li>
+            <div class="route-node">
+                🛰 {{ node }}
+            </div>
+
+            {% if not loop.last %}
+                <div class="route-arrow">
+                    ➜
+                </div>
+            {% endif %}
 
         {% endfor %}
 
-        </ul>
+    </div>
+</div>
 
-        <h3>
-            Distância Total:
-            {{ result.distance }}
-        </h3>
+<div class="card">
+    <h2>Etapas da Rota</h2>
 
-    {% else %}
+    <table>
+        <tr>
+            <th>Etapa</th>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Custo</th>
+        </tr>
 
-        <h3>
-            Nenhum caminho encontrado
-        </h3>
+        {% for step in result.steps %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ step.from }}</td>
+            <td>{{ step.to }}</td>
+            <td>{{ step.weight }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
-    {% endif %}
+{% elif start and end %}
 
+<div class="card alert-critical">
+    <h2>⚠ Nenhuma rota encontrada</h2>
+    <p>
+        Não existe conexão no grafo entre
+        <strong>{{ start }}</strong>
+        e
+        <strong>{{ end }}</strong>.
+    </p>
+</div>
+
+{% endif %}
+
+<div class="card">
+    <h2>Como o Dijkstra é usado?</h2>
+
+    <p>
+        O algoritmo de Dijkstra calcula o caminho de menor custo entre dois
+        objetos orbitais conectados no grafo. No OrbitalGuard, o custo é baseado
+        na diferença de altitude entre os objetos, representando proximidade
+        orbital e risco de movimentação.
+    </p>
 </div>
 
 {% endblock %}

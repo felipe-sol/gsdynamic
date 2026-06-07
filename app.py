@@ -3,7 +3,10 @@ from flask import render_template
 from flask import request
 from flask import jsonify
 import csv
-import csv
+import networkx as nx
+
+
+from services.graph_service import build_graph
 from io import StringIO, BytesIO
 from flask import Response, send_file
 from openpyxl import Workbook
@@ -15,7 +18,7 @@ from services.dynamic_programming import optimize_fuel
 from services.data_service import get_objects
 from services.graph_service import build_graph
 from services.dijkstra_service import find_best_route
-from services.montecarlo_service import collision_probability
+from services.montecarlo_service import run_monte_carlo
 from services.alert_service import get_alerts
 from services.prediction_service import predict_collisions
 from services.greedy_service import greedy_priority
@@ -195,17 +198,36 @@ def tracking():
 
 @app.route("/graph")
 def graph():
+    graph_data = build_graph()
 
-    graph = build_graph()
+    nodes = list(graph_data.nodes(data=True))
+    edges = list(graph_data.edges(data=True))
 
-    nodes = list(graph.nodes())
+    satellites = len([
+        node for node, data in nodes
+        if data["type"] == "satellite"
+    ])
 
-    edges = list(graph.edges(data=True))
+    debris = len([
+        node for node, data in nodes
+        if data["type"] == "debris"
+    ])
+
+    total_edges = len(edges)
+
+    density = round(
+        nx.density(graph_data),
+        2
+    )
 
     return render_template(
         "graph.html",
         nodes=nodes,
-        edges=edges
+        edges=edges,
+        satellites=satellites,
+        debris=debris,
+        total_edges=total_edges,
+        density=density
     )
 
 @app.route("/analytics")
@@ -294,14 +316,30 @@ def api_analytics():
         "geo": geo
     })
 
-@app.route("/collision")
+@app.route("/collision", methods=["GET", "POST"])
 def collision():
+    objects = get_objects()
 
-    probability = collision_probability()
+    result = None
+    probability_width = 0
+
+    if request.method == "POST":
+        object_name = request.form["object_name"]
+        simulations = int(request.form["simulations"])
+
+        result = run_monte_carlo(
+            object_name,
+            simulations
+        )
+
+        if result:
+            probability_width = result["probability"]
 
     return render_template(
         "collision.html",
-        probability=probability
+        objects=objects,
+        result=result,
+        probability_width=probability_width
     )
 
 @app.route("/mission-planner", methods=["GET", "POST"])
@@ -711,17 +749,29 @@ def export_report_excel():
         )
     )
 
-@app.route("/route")
+@app.route("/route", methods=["GET", "POST"])
 def route():
+    objects = get_objects()
 
-    result = find_best_route(
-        "ISS",
-        "DEBRIS-A"
-    )
+    result = None
+    start = None
+    end = None
+
+    if request.method == "POST":
+        start = request.form["start"]
+        end = request.form["end"]
+
+        result = find_best_route(
+            start,
+            end
+        )
 
     return render_template(
         "route.html",
-        result=result
+        objects=objects,
+        result=result,
+        start=start,
+        end=end
     )
 
 if __name__ == "__main__":
