@@ -159,42 +159,76 @@ def alerts():
 
 @app.route("/tracking")
 def tracking():
-
     objects = get_objects()
 
-    search = request.args.get(
-        "search",
-        ""
-    ).lower()
-
-    obj_type = request.args.get(
-        "type",
-        ""
-    )
+    search = request.args.get("search", "").lower()
+    obj_type = request.args.get("type", "")
+    risk_filter = request.args.get("risk", "")
+    sort_by = request.args.get("sort", "risk_desc")
 
     filtered = []
 
     for obj in objects:
-
-        matches_search = (
-            search in obj["name"].lower()
-        )
+        matches_search = search in obj["name"].lower()
 
         matches_type = (
-            not obj_type
+            obj_type == ""
             or obj["type"] == obj_type
         )
 
-        if matches_search and matches_type:
+        if obj["risk"] >= 70:
+            risk_level = "high"
+        elif obj["risk"] >= 40:
+            risk_level = "medium"
+        else:
+            risk_level = "low"
 
+        matches_risk = (
+            risk_filter == ""
+            or risk_filter == risk_level
+        )
+
+        if matches_search and matches_type and matches_risk:
             filtered.append(obj)
+
+    if sort_by == "risk_desc":
+        filtered.sort(key=lambda o: o["risk"], reverse=True)
+    elif sort_by == "risk_asc":
+        filtered.sort(key=lambda o: o["risk"])
+    elif sort_by == "altitude_desc":
+        filtered.sort(key=lambda o: o["altitude"], reverse=True)
+    elif sort_by == "altitude_asc":
+        filtered.sort(key=lambda o: o["altitude"])
+    elif sort_by == "name":
+        filtered.sort(key=lambda o: o["name"])
+
+    satellites = len([
+        o for o in filtered
+        if o["type"] == "satellite"
+    ])
+
+    debris = len([
+        o for o in filtered
+        if o["type"] == "debris"
+    ])
+
+    high_risk = len([
+        o for o in filtered
+        if o["risk"] >= 70
+    ])
 
     return render_template(
         "tracking.html",
         objects=filtered,
-        total=len(filtered)
+        total=len(filtered),
+        satellites=satellites,
+        debris=debris,
+        high_risk=high_risk,
+        search=search,
+        obj_type=obj_type,
+        risk_filter=risk_filter,
+        sort_by=sort_by
     )
-
 
 @app.route("/graph")
 def graph():

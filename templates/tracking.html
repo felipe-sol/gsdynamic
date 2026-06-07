@@ -2,126 +2,277 @@
 
 {% block content %}
 
-<h1>📡 Rastreamento Orbital</h1>
+<h1>📡 Rastreamento Orbital Avançado</h1>
 
-<div class="card">
+<div class="tracking-hero">
 
-<form>
+    <div>
+        <span class="hero-badge">● Rastreamento ativo</span>
 
-<div class="tracking-filters">
+        <h2>Monitoramento de Objetos Orbitais</h2>
 
-<input
-type="text"
-name="search"
-placeholder="Buscar objeto...">
+        <p>
+            Consulte satélites e detritos espaciais, filtre por risco,
+            altitude e tipo de objeto, e visualize detalhes operacionais
+            em tempo real.
+        </p>
+    </div>
 
-<select name="type">
-
-<option value="">
-Todos
-</option>
-
-<option value="satellite">
-Satélites
-</option>
-
-<option value="debris">
-Detritos
-</option>
-
-</select>
-
-<button type="submit">
-Buscar
-</button>
-
-</div>
-
-</form>
+    <div class="tracking-radar-mini">
+        <div class="tracking-earth">🌎</div>
+        <div class="tracking-dot dot-one">🛰</div>
+        <div class="tracking-dot dot-two">☄</div>
+        <div class="tracking-dot dot-three">🛰</div>
+    </div>
 
 </div>
 
 <div class="cards">
 
+    <div class="card kpi-card">
+        <span>📡</span>
+        <h3>Objetos Encontrados</h3>
+        <h1>{{ total }}</h1>
+        <p>Após filtros aplicados</p>
+    </div>
+
+    <div class="card kpi-card">
+        <span>🛰</span>
+        <h3>Satélites</h3>
+        <h1>{{ satellites }}</h1>
+        <p>Objetos operacionais</p>
+    </div>
+
+    <div class="card kpi-card">
+        <span>☄</span>
+        <h3>Detritos</h3>
+        <h1>{{ debris }}</h1>
+        <p>Fragmentos monitorados</p>
+    </div>
+
+    <div class="card kpi-card alert-critical">
+        <span>🚨</span>
+        <h3>Alto Risco</h3>
+        <h1>{{ high_risk }}</h1>
+        <p>Prioridade operacional</p>
+    </div>
+
+</div>
+
 <div class="card">
+    <h2>Filtros de Rastreamento</h2>
 
-<h3>Objetos Encontrados</h3>
+    <form method="GET">
 
-<h1>{{ total }}</h1>
+        <div class="tracking-filters-pro">
+
+            <div>
+                <label>Buscar objeto</label>
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Ex: ISS, STARLINK, DEBRIS">
+            </div>
+
+            <div>
+                <label>Tipo</label>
+                <select name="type">
+                    <option value="">Todos</option>
+
+                    <option value="satellite"
+                        {% if obj_type == "satellite" %}selected{% endif %}>
+                        Satélites
+                    </option>
+
+                    <option value="debris"
+                        {% if obj_type == "debris" %}selected{% endif %}>
+                        Detritos
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <label>Risco</label>
+                <select name="risk">
+                    <option value="">Todos</option>
+
+                    <option value="high"
+                        {% if risk_filter == "high" %}selected{% endif %}>
+                        Alto
+                    </option>
+
+                    <option value="medium"
+                        {% if risk_filter == "medium" %}selected{% endif %}>
+                        Médio
+                    </option>
+
+                    <option value="low"
+                        {% if risk_filter == "low" %}selected{% endif %}>
+                        Baixo
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <label>Ordenar por</label>
+                <select name="sort">
+                    <option value="risk_desc"
+                        {% if sort_by == "risk_desc" %}selected{% endif %}>
+                        Maior risco
+                    </option>
+
+                    <option value="risk_asc"
+                        {% if sort_by == "risk_asc" %}selected{% endif %}>
+                        Menor risco
+                    </option>
+
+                    <option value="altitude_desc"
+                        {% if sort_by == "altitude_desc" %}selected{% endif %}>
+                        Maior altitude
+                    </option>
+
+                    <option value="altitude_asc"
+                        {% if sort_by == "altitude_asc" %}selected{% endif %}>
+                        Menor altitude
+                    </option>
+
+                    <option value="name"
+                        {% if sort_by == "name" %}selected{% endif %}>
+                        Nome
+                    </option>
+                </select>
+            </div>
+
+            <div class="tracking-filter-actions">
+                <button type="submit">Aplicar Filtros</button>
+
+                <a href="/tracking">
+                    <button type="button" class="button-secondary">
+                        Limpar
+                    </button>
+                </a>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+<div class="tracking-layout">
+
+    <div class="card">
+        <h2>Base de Objetos Monitorados</h2>
+
+        <table>
+            <tr>
+                <th>Objeto</th>
+                <th>Tipo</th>
+                <th>Altitude</th>
+                <th>Risco</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+
+            {% for obj in objects %}
+
+            <tr>
+                <td>
+                    <strong>{{ obj.name }}</strong>
+                </td>
+
+                <td>
+                    {% if obj.type == "satellite" %}
+                        🛰 Satélite
+                    {% else %}
+                        ☄ Detrito
+                    {% endif %}
+                </td>
+
+                <td>{{ obj.altitude }} km</td>
+
+                <td>
+                    {% if obj.risk >= 70 %}
+                        <span class="risk-high">🔴 {{ obj.risk }}</span>
+                    {% elif obj.risk >= 40 %}
+                        <span class="risk-medium">🟡 {{ obj.risk }}</span>
+                    {% else %}
+                        <span class="risk-low">🟢 {{ obj.risk }}</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if obj.risk >= 70 %}
+                        <span class="status-pill status-danger">Crítico</span>
+                    {% elif obj.risk >= 40 %}
+                        <span class="status-pill status-warning">Atenção</span>
+                    {% else %}
+                        <span class="status-pill status-safe">Seguro</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <button
+                        type="button"
+                        class="small-button"
+                        onclick="openTrackingDetails(
+                            '{{ obj.name }}',
+                            '{{ obj.type }}',
+                            '{{ obj.altitude }}',
+                            '{{ obj.risk }}'
+                        )">
+                        Detalhes
+                    </button>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </table>
+
+        {% if total == 0 %}
+            <div class="empty-state">
+                <h2>🔎 Nenhum objeto encontrado</h2>
+                <p>Altere os filtros para ampliar a busca.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <aside class="tracking-details-panel" id="trackingDetails">
+
+        <button
+            type="button"
+            class="close-panel"
+            onclick="closeTrackingDetails()">
+            ×
+        </button>
+
+        <h2>Detalhes do Objeto</h2>
+
+        <div class="detail-icon" id="detailIcon">
+            🛰
+        </div>
+
+        <p><strong>Nome:</strong> <span id="detailName">Selecione um objeto</span></p>
+        <p><strong>Tipo:</strong> <span id="detailType">-</span></p>
+        <p><strong>Altitude:</strong> <span id="detailAltitude">-</span></p>
+        <p><strong>Risco:</strong> <span id="detailRisk">-</span></p>
+
+        <div class="detail-risk-box" id="detailRiskBox">
+            Aguardando seleção
+        </div>
+
+        <hr>
+
+        <h3>Ações Sugeridas</h3>
+
+        <ul id="detailActions">
+            <li>Selecione um objeto para visualizar recomendações.</li>
+        </ul>
+
+    </aside>
 
 </div>
 
-</div>
-
-<div class="card">
-
-<table>
-
-<tr>
-
-<th>Nome</th>
-<th>Tipo</th>
-<th>Altitude</th>
-<th>Risco</th>
-
-</tr>
-
-{% for obj in objects %}
-
-<tr>
-
-<td>
-
-{{ obj.name }}
-
-</td>
-
-<td>
-
-{% if obj.type == "satellite" %}
-🛰 Satélite
-{% else %}
-☄ Detrito
-{% endif %}
-
-</td>
-
-<td>
-
-{{ obj.altitude }} km
-
-</td>
-
-<td>
-
-{% if obj.risk >= 70 %}
-
-<span class="risk-high">
-🔴 {{ obj.risk }}
-</span>
-
-{% elif obj.risk >= 40 %}
-
-<span class="risk-medium">
-🟡 {{ obj.risk }}
-</span>
-
-{% else %}
-
-<span class="risk-low">
-🟢 {{ obj.risk }}
-</span>
-
-{% endif %}
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</table>
-
-</div>
+<script src="{{ url_for('static', filename='js/tracking.js') }}"></script>
 
 {% endblock %}
