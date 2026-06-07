@@ -4,36 +4,124 @@
 
 <h1>📡 Rastreamento Orbital</h1>
 
+<div class="card">
+
+<form>
+
+<div class="tracking-filters">
+
+<input
+type="text"
+name="search"
+placeholder="Buscar objeto...">
+
+<select name="type">
+
+<option value="">
+Todos
+</option>
+
+<option value="satellite">
+Satélites
+</option>
+
+<option value="debris">
+Detritos
+</option>
+
+</select>
+
+<button type="submit">
+Buscar
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Objetos Encontrados</h3>
+
+<h1>{{ total }}</h1>
+
+</div>
+
+</div>
+
+<div class="card">
+
 <table>
 
-    <tr>
+<tr>
 
-        <th>Nome</th>
+<th>Nome</th>
+<th>Tipo</th>
+<th>Altitude</th>
+<th>Risco</th>
 
-        <th>Tipo</th>
+</tr>
 
-        <th>Altitude</th>
+{% for obj in objects %}
 
-        <th>Risco</th>
+<tr>
 
-    </tr>
+<td>
 
-    {% for obj in objects %}
+{{ obj.name }}
 
-    <tr>
+</td>
 
-        <td>{{ obj.name }}</td>
+<td>
 
-        <td>{{ obj.type }}</td>
+{% if obj.type == "satellite" %}
+🛰 Satélite
+{% else %}
+☄ Detrito
+{% endif %}
 
-        <td>{{ obj.altitude }} km</td>
+</td>
 
-        <td>{{ obj.risk }}</td>
+<td>
 
-    </tr>
+{{ obj.altitude }} km
 
-    {% endfor %}
+</td>
+
+<td>
+
+{% if obj.risk >= 70 %}
+
+<span class="risk-high">
+🔴 {{ obj.risk }}
+</span>
+
+{% elif obj.risk >= 40 %}
+
+<span class="risk-medium">
+🟡 {{ obj.risk }}
+</span>
+
+{% else %}
+
+<span class="risk-low">
+🟢 {{ obj.risk }}
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
 
 </table>
+
+</div>
 
 {% endblock %}

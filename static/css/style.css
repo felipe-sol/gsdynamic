@@ -369,3 +369,124 @@ button:hover{
         align-items:flex-start;
     }
 }
+
+.orbital-map{
+    position:relative;
+    width:720px;
+    height:720px;
+    max-width:100%;
+    margin:35px auto;
+    border-radius:50%;
+    background:
+        radial-gradient(circle, rgba(0,212,255,0.12), transparent 65%),
+        rgba(5,8,22,0.75);
+    box-shadow:0 0 45px rgba(0,212,255,0.18);
+    overflow:hidden;
+}
+
+.orbit{
+    position:absolute;
+    border:1px dashed rgba(0,212,255,0.35);
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.orbit span{
+    position:absolute;
+    top:8px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#00d4ff;
+    background:#050816;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.orbit-leo{
+    width:260px;
+    height:260px;
+}
+
+.orbit-meo{
+    width:450px;
+    height:450px;
+}
+
+.orbit-geo{
+    width:650px;
+    height:650px;
+}
+
+.map-earth{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:95px;
+    z-index:5;
+}
+
+.map-object{
+    position:absolute;
+    top:50%;
+    left:50%;
+    font-size:25px;
+    z-index:8;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.map-object:hover{
+    transform:scale(1.4);
+    filter:drop-shadow(0 0 10px #00d4ff);
+}
+
+.obj1{ transform:rotate(15deg) translateX(130px) rotate(-15deg); }
+.obj2{ transform:rotate(80deg) translateX(225px) rotate(-80deg); }
+.obj3{ transform:rotate(145deg) translateX(225px) rotate(-145deg); }
+.obj4{ transform:rotate(210deg) translateX(130px) rotate(-210deg); }
+.obj5{ transform:rotate(290deg) translateX(225px) rotate(-290deg); }
+.obj6{ transform:rotate(330deg) translateX(325px) rotate(-330deg); }
+.obj7{ transform:rotate(40deg) translateX(325px) rotate(-40deg); }
+.obj8{ transform:rotate(120deg) translateX(130px) rotate(-120deg); }
+.obj9{ transform:rotate(250deg) translateX(325px) rotate(-250deg); }
+.obj10{ transform:rotate(310deg) translateX(130px) rotate(-310deg); }
+
+.tracking-filters{
+
+display:flex;
+
+gap:15px;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+}
+
+.risk-low{
+
+color:#00ff99;
+
+font-weight:bold;
+
+}
+
+.risk-medium{
+
+color:#ffd000;
+
+font-weight:bold;
+
+}
+
+.risk-high{
+
+color:#ff4444;
+
+font-weight:bold;
+
+}

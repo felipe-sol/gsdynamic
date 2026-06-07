@@ -4,20 +4,84 @@
 
 <h1>🌍 Mapa Orbital</h1>
 
-<div class="card">
+<div class="cards">
+
+    <div class="card">
+        <h3>LEO</h3>
+        <h1>{{ leo }}</h1>
+        <p>Órbita baixa</p>
+    </div>
+
+    <div class="card">
+        <h3>MEO</h3>
+        <h1>{{ meo }}</h1>
+        <p>Órbita média</p>
+    </div>
+
+    <div class="card">
+        <h3>GEO</h3>
+        <h1>{{ geo }}</h1>
+        <p>Órbita geoestacionária</p>
+    </div>
+
+</div>
+
+<div class="orbital-map">
+
+    <div class="orbit orbit-leo">
+        <span>LEO</span>
+    </div>
+
+    <div class="orbit orbit-meo">
+        <span>MEO</span>
+    </div>
+
+    <div class="orbit orbit-geo">
+        <span>GEO</span>
+    </div>
+
+    <div class="map-earth">
+        🌎
+    </div>
 
     {% for obj in objects %}
 
-        <p>
+        <div class="map-object obj{{ loop.index }}"
+             title="{{ obj.name }} | {{ obj.altitude }} km | Risco {{ obj.risk }}">
 
-        🛰 {{ obj.name }}
+            {% if obj.type == "satellite" %}
+                🛰
+            {% else %}
+                ☄
+            {% endif %}
 
-        Altitude:
-        {{ obj.altitude }} km
-
-        </p>
+        </div>
 
     {% endfor %}
+
+</div>
+
+<div class="card">
+
+    <h3>Objetos Monitorados</h3>
+
+    <table>
+        <tr>
+            <th>Objeto</th>
+            <th>Tipo</th>
+            <th>Altitude</th>
+            <th>Risco</th>
+        </tr>
+
+        {% for obj in objects %}
+        <tr>
+            <td>{{ obj.name }}</td>
+            <td>{{ obj.type }}</td>
+            <td>{{ obj.altitude }} km</td>
+            <td>{{ obj.risk }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
 </div>
 

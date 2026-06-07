@@ -99,12 +99,18 @@ def control_center():
 
 @app.route("/map")
 def orbital_map():
-
     objects = get_objects()
+
+    leo = len([o for o in objects if o["altitude"] <= 2000])
+    meo = len([o for o in objects if 2000 < o["altitude"] <= 35786])
+    geo = len([o for o in objects if o["altitude"] > 35786])
 
     return render_template(
         "map.html",
-        objects=objects
+        objects=objects,
+        leo=leo,
+        meo=meo,
+        geo=geo
     )
 
 @app.route("/alerts")
@@ -122,9 +128,37 @@ def tracking():
 
     objects = get_objects()
 
+    search = request.args.get(
+        "search",
+        ""
+    ).lower()
+
+    obj_type = request.args.get(
+        "type",
+        ""
+    )
+
+    filtered = []
+
+    for obj in objects:
+
+        matches_search = (
+            search in obj["name"].lower()
+        )
+
+        matches_type = (
+            not obj_type
+            or obj["type"] == obj_type
+        )
+
+        if matches_search and matches_type:
+
+            filtered.append(obj)
+
     return render_template(
         "tracking.html",
-        objects=objects
+        objects=filtered,
+        total=len(filtered)
     )
 
 
