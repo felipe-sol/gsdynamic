@@ -4,28 +4,51 @@
 
 <h1>🧠 Mission Planner</h1>
 
-<div class="card">
-    <form method="POST">
-        <label>Combustível disponível</label>
-        <br><br>
+<section class="planner-hero">
 
-        <input type="number" name="fuel" placeholder="Ex: 100" required>
+    <div>
+        <span class="hero-badge">● Programação Dinâmica Ativa</span>
 
-        <br><br>
+        <h2>Otimização de Missão Orbital</h2>
 
-        <button type="submit">
-            Otimizar Missão
-        </button>
-    </form>
-</div>
+        <p>
+            O sistema usa Programação Dinâmica para escolher o melhor conjunto
+            de manobras possíveis, maximizando o benefício operacional sem
+            ultrapassar o combustível disponível.
+        </p>
+    </div>
+
+    <div class="planner-form-box">
+
+        <form method="POST">
+
+            <label>Combustível disponível</label>
+
+            <input
+                type="number"
+                name="fuel"
+                min="10"
+                max="200"
+                placeholder="Ex: 100"
+                required>
+
+            <button type="submit">
+                Otimizar Missão
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
 
 {% if result %}
 
 <div class="cards">
 
     <div class="card">
-        <h3>Eficiência Máxima</h3>
-        <h1>{{ result.max_benefit }}</h1>
+        <h3>Combustível Disponível</h3>
+        <h1>{{ result.available_fuel }}</h1>
     </div>
 
     <div class="card">
@@ -33,28 +56,126 @@
         <h1>{{ result.fuel_used }}</h1>
     </div>
 
+    <div class="card">
+        <h3>Combustível Restante</h3>
+        <h1>{{ result.remaining_fuel }}</h1>
+    </div>
+
+    <div class="card alert-critical">
+        <h3>Benefício Máximo</h3>
+        <h1>{{ result.max_benefit }}</h1>
+    </div>
+
+</div>
+
+    <div class="card">
+        <h2>Eficiência da Missão</h2>
+
+        <p>
+            Índice de eficiência:
+            <strong>{{ result.efficiency }}</strong>
+            pontos de benefício por unidade de combustível.
+        </p>
+
+    <div class="card">
+        <h2>Eficiência da Missão</h2>
+
+        <p>
+            Índice de eficiência:
+            <strong>{{ result.efficiency }}</strong>
+            pontos de benefício por unidade de combustível.
+        </p>
+    </div>
 </div>
 
 <div class="card">
-    <h2>Manobras Selecionadas</h2>
+    <h2>Manobras Selecionadas pela Programação Dinâmica</h2>
+
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Manobra</th>
+            <th>Combustível</th>
+            <th>Benefício</th>
+            <th>Risco</th>
+        </tr>
+
+        {% for item in result.selected %}
+
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td><strong>{{ item.name }}</strong></td>
+            <td>{{ item.fuel }}</td>
+            <td>{{ item.benefit }}</td>
+            <td>{{ item.risk }}</td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card">
+    <h2>Manobras Descartadas</h2>
 
     <table>
         <tr>
             <th>Manobra</th>
             <th>Combustível</th>
             <th>Benefício</th>
+            <th>Motivo</th>
         </tr>
 
-        {% for item in result.selected %}
+        {% for item in result.discarded %}
+
         <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.fuel }}</td>
             <td>{{ item.benefit }}</td>
+            <td>Não entrou na melhor combinação para o limite atual.</td>
         </tr>
+
         {% endfor %}
     </table>
 </div>
 
 {% endif %}
+
+<div class="card">
+    <h2>Como a Programação Dinâmica é aplicada?</h2>
+
+    <p>
+        O problema é modelado como uma variação da Mochila 0/1.
+        Cada manobra possui um custo em combustível e um benefício operacional.
+        O algoritmo avalia combinações possíveis e armazena os melhores resultados
+        parciais em uma tabela dinâmica, evitando recalcular decisões repetidas.
+    </p>
+
+    <table>
+        <tr>
+            <th>Elemento</th>
+            <th>No Projeto</th>
+        </tr>
+
+        <tr>
+            <td>Capacidade</td>
+            <td>Combustível disponível</td>
+        </tr>
+
+        <tr>
+            <td>Peso</td>
+            <td>Custo da manobra</td>
+        </tr>
+
+        <tr>
+            <td>Valor</td>
+            <td>Benefício operacional</td>
+        </tr>
+
+        <tr>
+            <td>Objetivo</td>
+            <td>Maximizar benefício sem ultrapassar combustível</td>
+        </tr>
+    </table>
+</div>
 
 {% endblock %}

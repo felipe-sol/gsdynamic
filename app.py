@@ -13,8 +13,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 
 
-
-from services.dynamic_programming import optimize_fuel
+from services.dynamic_programming import optimize_mission
 from services.data_service import get_objects
 from services.graph_service import build_graph
 from services.dijkstra_service import find_best_route
@@ -51,9 +50,18 @@ def dashboard():
 def greedy():
     priorities = greedy_priority()
 
+    top_priority = priorities[0] if priorities else None
+
+    total_score = round(
+        sum(obj["priority_score"] for obj in priorities),
+        2
+    )
+
     return render_template(
         "greedy.html",
-        priorities=priorities
+        priorities=priorities,
+        top_priority=top_priority,
+        total_score=total_score
     )
 
 @app.route("/radar")
@@ -397,30 +405,11 @@ def mission_planner():
     if request.method == "POST":
         fuel = int(request.form["fuel"])
 
-        maneuvers = [
-            {
-                "name": "Desviar ISS de zona crítica",
-                "fuel": 20,
-                "benefit": 50
-            },
-            {
-                "name": "Remover DEBRIS-A",
-                "fuel": 40,
-                "benefit": 95
-            },
-            {
-                "name": "Remover DEBRIS-B",
-                "fuel": 35,
-                "benefit": 80
-            },
-            {
-                "name": "Recalcular órbita STARLINK-1001",
-                "fuel": 25,
-                "benefit": 60
-            }
-        ]
-
-        result = optimize_fuel(fuel, maneuvers)
+        result = optimize_mission(fuel)
+        result["efficiency_width"] = min(
+            100,
+            result["efficiency"] * 20
+        )
 
     return render_template(
         "mission_planner.html",

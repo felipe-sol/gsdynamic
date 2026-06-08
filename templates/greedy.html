@@ -4,24 +4,137 @@
 
 <h1>🎯 Algoritmo Guloso</h1>
 
-<p>
-Priorização dos detritos com maior risco para remoção orbital.
-</p>
+<section class="greedy-hero">
 
-<table>
-    <tr>
-        <th>Prioridade</th>
-        <th>Objeto</th>
-        <th>Risco</th>
-    </tr>
+    <div>
+        <span class="hero-badge">● Decisão Heurística Ativa</span>
 
-    {% for obj in priorities %}
-    <tr>
-        <td>{{ loop.index }}</td>
-        <td>{{ obj.name }}</td>
-        <td>{{ obj.risk }}</td>
-    </tr>
-    {% endfor %}
-</table>
+        <h2>Priorização Inteligente de Detritos</h2>
+
+        <p>
+            O algoritmo guloso seleciona primeiro os detritos com maior
+            pontuação de prioridade. A decisão é feita localmente em cada etapa,
+            escolhendo sempre o objeto mais crítico naquele momento.
+        </p>
+    </div>
+
+    <div class="greedy-equation">
+        Prioridade = Risco × Fator Orbital
+    </div>
+
+</section>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Detritos Avaliados</h3>
+        <h1>{{ priorities|length }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Pontuação Total</h3>
+        <h1>{{ total_score }}</h1>
+    </div>
+
+    <div class="card alert-critical">
+        <h3>Maior Prioridade</h3>
+
+        {% if top_priority %}
+            <h1>{{ top_priority.name }}</h1>
+            <p>Score {{ top_priority.priority_score }}</p>
+        {% else %}
+            <h1>-</h1>
+        {% endif %}
+    </div>
+
+</div>
+
+<div class="card">
+    <h2>Como o algoritmo decide?</h2>
+
+    <p>
+        O algoritmo guloso usa uma regra simples e eficiente: ordenar os detritos
+        pela maior pontuação de prioridade. Essa pontuação combina o nível de risco
+        com a região orbital. Detritos em LEO recebem peso maior, pois estão mais
+        próximos de satélites operacionais e missões tripuladas.
+    </p>
+
+    <table>
+        <tr>
+            <th>Condição</th>
+            <th>Fator Orbital</th>
+            <th>Justificativa</th>
+        </tr>
+
+        <tr>
+            <td>LEO até 2.000 km</td>
+            <td>1.5</td>
+            <td>Maior concentração operacional</td>
+        </tr>
+
+        <tr>
+            <td>MEO até 35.786 km</td>
+            <td>1.2</td>
+            <td>Importante para navegação e comunicação</td>
+        </tr>
+
+        <tr>
+            <td>GEO acima de 35.786 km</td>
+            <td>1.0</td>
+            <td>Monitoramento padrão</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h2>Ranking de Priorização</h2>
+
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Objeto</th>
+            <th>Altitude</th>
+            <th>Risco</th>
+            <th>Classificação</th>
+            <th>Score Guloso</th>
+            <th>Justificativa</th>
+        </tr>
+
+        {% for obj in priorities %}
+
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td><strong>{{ obj.name }}</strong></td>
+            <td>{{ obj.altitude }} km</td>
+
+            <td>
+                {% if obj.risk >= 70 %}
+                    <span class="risk-high">🔴 {{ obj.risk }}</span>
+                {% elif obj.risk >= 40 %}
+                    <span class="risk-medium">🟡 {{ obj.risk }}</span>
+                {% else %}
+                    <span class="risk-low">🟢 {{ obj.risk }}</span>
+                {% endif %}
+            </td>
+
+            <td>{{ obj.risk_classification }}</td>
+            <td><strong>{{ obj.priority_score }}</strong></td>
+            <td>{{ obj.reason }}</td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card">
+    <h2>Por que isso é guloso?</h2>
+
+    <p>
+        O algoritmo não testa todas as combinações possíveis. Ele escolhe sempre
+        a melhor opção disponível naquele momento, baseada no maior score.
+        Essa estratégia é rápida e eficiente para tomada de decisão operacional,
+        embora não garanta uma solução global ótima como a programação dinâmica.
+    </p>
+</div>
 
 {% endblock %}
