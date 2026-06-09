@@ -1,4 +1,4 @@
-# 🚀 OrbitalGuard — Sistema Inteligente de Monitoramento e Rastreamento de Lixo Espacial
+# 🚀 OrbSafe — Sistema Inteligente de Monitoramento e Rastreamento de Lixo Espacial
 
 <p align="center">
 
@@ -462,9 +462,9 @@ orbitalguard/
 ## Clonar projeto
 
 ```bash
-git clone https://github.com/seuusuario/orbitalguard.git
+git clone https://github.com/felipe-sol/gsdynamic.git
 
-cd orbitalguard
+cd gsdynamic
 ```
 
 ## Criar ambiente virtual
@@ -530,31 +530,13 @@ Sistemas semelhantes são utilizados por NASA, ESA e SpaceX para reduzir riscos 
 
 # 👨‍💻 Autores
 
-Felipe Marceli - RM560456
+Kauã Rodrigues de Souza - RM 559335 
+Leonardo Luiz Jardim Queijo - RM 559842 
+Felipe Santos Marceli - RM 560456 
+Enzo Galhardo - RM561001 
+Kauan Diogo - RM560727
 
 
 Projeto acadêmico desenvolvido para aplicação de algoritmos clássicos em um cenário de monitoramento e gestão de lixo espacial, combinando otimização, análise de risco e visualização interativa de dados orbitais.
 
 ---
-
-## ⭐ Destaques do Projeto
-
-✅ WebApp completo
-
-✅ Interface profissional
-
-✅ Dashboard executivo
-
-✅ Visualizações interativas
-
-✅ 4 algoritmos obrigatórios implementados
-
-✅ Exportação CSV e Excel
-
-✅ Relatórios executivos
-
-✅ Simulações probabilísticas
-
-✅ Aplicação prática de Grafos
-
-✅ Projeto alinhado a problemas reais da indústria espacial 🚀
