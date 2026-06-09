@@ -14,7 +14,7 @@
 
 # 🌍 Visão Geral
 
-O OrbitalGuard é uma plataforma web desenvolvida para monitoramento, análise e gerenciamento de objetos em órbita terrestre, incluindo satélites ativos e detritos espaciais.
+O OrbSafe é uma plataforma web desenvolvida para monitoramento, análise e gerenciamento de objetos em órbita terrestre, incluindo satélites ativos e detritos espaciais. Desde o lançamento do Sputnik em 1957, a humanidade tem enviado satélites, sondas e foguetes ao espaço. O problema é que muito do que sobe, fica por lá. Hoje, a Órbita Baixa da Terra (LEO - Low Earth Orbit), que fica entre 160 km e 2.000 km de altitude, transformou-se em um verdadeiro "lixão cósmico".
 
 O sistema foi criado para demonstrar a aplicação prática de algoritmos clássicos de otimização, busca e simulação em um contexto realista de monitoramento espacial.
 
@@ -32,9 +32,29 @@ Além do rastreamento orbital, a plataforma oferece:
 
 # 🎯 Objetivos do Projeto
 
-O crescimento exponencial da quantidade de satélites e fragmentos espaciais tornou o monitoramento orbital um desafio global.
+O crescimento exponencial da quantidade de satélites e fragmentos espaciais tornou o monitoramento orbital um desafio global. O grande perigo dos detritos espaciais não é o tamanho deles, mas sim a sua velocidade.
 
-O OrbitalGuard foi desenvolvido para:
+Na Órbita Baixa da Terra, os objetos viajam a aproximadamente 28.000 km/h (cerca de 7,8 km/s). Nessa velocidade, a energia cinética de um impacto é devastadora:
+
+Uma minúscula lasca de tinta pode trincar o para-brisa blindado da Estação Espacial Internacional (ISS).
+
+Um fragmento do tamanho de uma bolinha de gude tem o impacto equivalente a uma granada de mão e pode destruir completamente um satélite ativo.
+
+Objetos maiores que 10 cm causam fragmentação catastrófica, pulverizando o alvo e gerando milhares de novos pedaços de lixo.
+
+*Impacto no Cotidiano da Terra*
+
+O colapso das órbitas terrestres devido ao lixo espacial não afetaria apenas os astronautas; ele paralisaria a sociedade moderna. Dependemos da órbita para:
+
+Comunicação e Internet: Sistemas de telecomunicações globais.
+
+Geolocalização (GPS): Navegação de aviões, navios, carros e funcionamento de transações bancárias (que usam o relógio atômico dos satélites).
+
+Monitoramento Climático: Previsão de desastres naturais, furacões e estudos sobre o aquecimento global.
+
+Segurança Nacional: Satélites militares e de monitoramento de fronteiras.
+
+*O OrbitalGuard foi desenvolvido para:*
 
 ✅ Monitorar objetos espaciais
 
